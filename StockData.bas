@@ -1,4 +1,4 @@
-Attribute VB_Name = "Module1"
+Attribute VB_Name = "Module11"
 Sub alphatest()
     Dim ticker As String
     Dim ticker_total As Double
@@ -42,12 +42,12 @@ Sub alphatest()
 End Sub
 
 Sub Bonus()
-
-    Dim tickerrange As Range
-    Set tickerrange = Range("K2: K3010")
-    Dim stocktotals As Range
-    Set stocktotals = Range("L2: L3010")
-    
+    Dim lastrow As Long
+    lastrow = Cells(Rows.Count, 1).End(xlUp).Row
+    Start_percent = Cells(2, 10)
+    End_percent = Cells(lastrow, 10)
+    Start_stock = Cells(2, 11)
+    End_stock = Cells(lastrow, 11)
     Range("P2, P3").NumberFormat = "0.00%"
     Dim total_stock As Double
     
@@ -62,14 +62,14 @@ Sub Bonus()
     Range("N2:N4").HorizontalAlignment = xlRight
     Range("O2:O3").HorizontalAlignment = xlCenter
     
-    max_stock = Application.WorksheetFunction.Max(tickerrange)
+    max_stock = Application.WorksheetFunction.Max(Start_percent, End_percent)
     Range("P2").Value = max_stock
-    min_stock = Application.WorksheetFunction.Min(tickerrange)
+    min_stock = Application.WorksheetFunction.Min(Start_percent, End_percent)
     Range("P3").Value = min_stock
-    total_stock = Application.Sum(stocktotals)
+    total_stock = Application.Sum(Start_stock, End_stock)
     Range("P4").Value = total_stock
     
-    For i = 2 To 3010
+    For i = 2 To lastrow
         If Cells(i, 11).Value = max_stock Then
             Range("O2").Value = Cells(i, 9)
         End If
@@ -79,5 +79,5 @@ Sub Bonus()
         
     Next i
     
-    
+    MsgBox (End_percent)
 End Sub
